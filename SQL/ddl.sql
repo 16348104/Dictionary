@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS user;
-
 create TABLE "user" (
   id int(10) unsigned not null,
   "user" varchar(255),
