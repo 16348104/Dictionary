@@ -10,6 +10,8 @@
     username: <input name="username"><br/>
     password: <input name="password" type="password"><br/>
     <input type="submit" value="LOGIN">
+    ${sessionScope.messsge}<br>
+    <a href="sign up.jsp">signup</a>
 </form>
 </body>
 </html>
