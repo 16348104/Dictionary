@@ -1,12 +1,13 @@
 package servlet;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-/**
- * Created by xdx on 2015/12/11.
- */
-public class WordAction extends HttpServlet
-{
-
+@WebServlet("/word")
+public class WordAction extends HttpServlet {
+    private PreparedStatement preparedStatement = null;
+    private ResultSet resultSet = null;
 
 }
