@@ -1,17 +1,16 @@
 package util;
 
 import java.sql.*;
+
 import com.mysql.jdbc.Driver;
-/**
- * Created by xdx on 2015/12/11.
- */
+
 public class DB {
     private static final String url = "jdbc:mysql:///test";
     private static final String user = "root";
     private static final String password = "1111";
     private static Connection conn;
 
-    public static Connection getConn() {
+    public static Connection getConnection() {
         if (conn == null) {
             try {
                 new Driver();
