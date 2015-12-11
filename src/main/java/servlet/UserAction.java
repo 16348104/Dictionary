@@ -18,7 +18,7 @@ public class UserAction extends HttpServlet {
     private static final String login_sql = "SELECT * FROM user WHERE user=? AND password=?";
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         if (action.equals("signup")) {
             signup(req, resp);
@@ -54,7 +54,7 @@ public class UserAction extends HttpServlet {
                 req.getSession().setAttribute("username", username);
                 resp.sendRedirect("word?action=query");
             } else {
-                req.setAttribute("message", "错误！");
+                req.setAttribute("message", "用户名或密码错误！");
                 resp.sendRedirect("default.jsp");
             }
 
@@ -81,7 +81,8 @@ public class UserAction extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        doPost(req,resp);
     }
 }
