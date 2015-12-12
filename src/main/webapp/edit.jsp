@@ -13,7 +13,9 @@
 </head>
 <body>
 <h1>edit page</h1>
-
+<c:if test="${sessionScope.username ==null}">
+    <c:redirect url="/"></c:redirect>
+</c:if>
 <form action="word" method="post">
     <input type="hidden" name="action" value="update">
     <input type="hidden" name="id" value="${sessionScope.word.id}"><br>

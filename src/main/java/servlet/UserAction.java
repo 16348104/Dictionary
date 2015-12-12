@@ -72,7 +72,7 @@ public class UserAction extends HttpServlet {
         String password = req.getParameter("password");
         PreparedStatement prepare = null;
         try {
-            prepare = DB.getConnection().prepareStatement(sign_up_sql)
+            prepare = DB.getConnection().prepareStatement(sign_up_sql);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
