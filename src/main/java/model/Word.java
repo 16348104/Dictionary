@@ -1,8 +1,5 @@
 package model;
-
-
 import java.io.Serializable;
-
 public class Word implements Serializable {
     private Integer id;
     private String english;

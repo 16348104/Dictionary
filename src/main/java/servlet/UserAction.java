@@ -29,6 +29,16 @@ public class UserAction extends HttpServlet {
         if (action.equals("logout")) {
             logout(req, resp);
         }
+        if (action.equals("check")) {
+            check(req,resp);
+        }
+    }
+
+    private void check(HttpServletRequest req, HttpServletResponse resp)
+
+    {
+        String username = req.getParameter("username");
+        System.out.println(username);
     }
 
     private void logout(HttpServletRequest req, HttpServletResponse resp) {
@@ -83,6 +93,6 @@ public class UserAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        doPost(req,resp);
+        doPost(req, resp);
     }
 }
