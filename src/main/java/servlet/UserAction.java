@@ -76,7 +76,6 @@ public class UserAction extends HttpServlet {
         }
 
     }
-
     private void signup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
