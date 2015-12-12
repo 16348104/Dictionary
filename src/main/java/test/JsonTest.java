@@ -5,6 +5,7 @@ package test;
  */
 public class JsonTest {
     public static void main(String[] args) {
-        String jsonstring="{}";
+        String jsonstring="{\"k1\":\"v1\",\"k2\":2,\"k3\":null}";
+
     }
 }
