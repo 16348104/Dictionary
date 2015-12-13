@@ -18,7 +18,7 @@ public class Jackson {
     public static void main(String[] args) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        Word word = new Word(1, "EHG", "ÖÐ");
+        Word word = new Word(1, "EHG", "ä¸­");
         List<Object> li = new ArrayList<>();
         li.add(147);
         li.add("sss");

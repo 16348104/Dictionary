@@ -1,6 +1,11 @@
 package servlet;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import model.User;
+import org.apache.ibatis.session.SqlSession;
 import util.DB;
+import util.SqlSessionUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,11 +16,11 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/user")
 public class UserAction extends HttpServlet {
-    private static final String sign_up_sql = "INSERT INTO user VALUES (NULL ,?,?)";
-    private static final String login_sql = "SELECT * FROM user WHERE user=? AND password=?";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,11 +39,32 @@ public class UserAction extends HttpServlet {
         }
     }
 
-    private void check(HttpServletRequest req, HttpServletResponse resp)
+    private void check(HttpServletRequest req, HttpServletResponse resp) throws IOException
 
     {
         String username = req.getParameter("username");
         System.out.println(username);
+        String sql = "select * from user where username=?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Boolean> map = new HashMap<>();
+        try {
+            preparedStatement = DB.getConnection().prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                map.put("isUsernameExist", true);
+            } else {
+                map.put("isUsernameExist", false);
+            }
+            resp.setContentType("application/json;charset=utf-8");
+            resp.getWriter().print(objectMapper.writeValueAsString(map)); // {"isUsernameExist":true/false}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DB.close(resultSet, preparedStatement);
+        }
     }
 
     private void logout(HttpServletRequest req, HttpServletResponse resp) {
@@ -51,42 +77,42 @@ public class UserAction extends HttpServlet {
     }
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            preparedStatement = DB.getConnection().prepareStatement(login_sql);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                req.getSession().setAttribute("username", username);
-                resp.sendRedirect("word?action=query");
-            } else {
-                req.setAttribute("message", "用户名或密码错误！");
-                resp.sendRedirect("default.jsp");
-            }
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+        User user = sqlSession.selectOne("user.login", new User(null, req.getParameter("username"), req.getParameter("password")));
+        sqlSession.close();
+        if()
+// String username = req.getParameter("username");
 
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DB.close(resultSet, preparedStatement);
-        }
+//        String password = req.getParameter("password");
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+//        try {
+//            preparedStatement = DB.getConnection().prepareStatement(login_sql);
+//            preparedStatement.setString(1, username);
+//            preparedStatement.setString(2, password);
+//            resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                req.getSession().setAttribute("username", username);
+//                resp.sendRedirect("word?action=query");
+//            } else {
+//                req.setAttribute("message", "用户名或密码错误！");
+//                resp.sendRedirect("default.jsp");
+//            }
+//
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            DB.close(resultSet, preparedStatement);
+//        }
 
     }
     private void signup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        PreparedStatement prepare = null;
-        try {
-            prepare = DB.getConnection().prepareStatement(sign_up_sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DB.close(null, prepare);
-        }
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+        User user = sqlSession.selectOne("user.login", new User(null, req.getParameter("username"), req.getParameter("password")));
+        sqlSession.commit();
+        sqlSession.close();
+        resp.sendRedirect("default.jsp");
     }
 
     @Override

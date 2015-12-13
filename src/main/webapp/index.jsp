@@ -11,10 +11,10 @@
 </head>
 <body>
 <h1>index page</h1>
-<c:if test="${sessionScope.username ==null}">
+<c:if test="${sessionScope.user ==null}">
     <c:redirect url="/"></c:redirect>
 </c:if>
-welcome:${sessionScope.username}<br>
+welcome:${sessionScope.user.username}<br>
 <a href="user?action=logout">log out</a>
 <hr>
 <form action="word" method="post">

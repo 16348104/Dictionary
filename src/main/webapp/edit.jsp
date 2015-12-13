@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>edit page</h1>
-<c:if test="${sessionScope.username ==null}">
+<c:if test="${sessionScope.user ==null}">
     <c:redirect url="/"></c:redirect>
 </c:if>
 <form action="word" method="post">
