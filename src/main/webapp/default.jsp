@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>default</title>
+    <title>default page</title>
 </head>
 <body>
 <h1>default page</h1>
@@ -9,7 +9,7 @@
     <input type="hidden" name="action" value="login">
     username: <input name="username"><br/>
     password: <input name="password" type="password"><br/>
-    <input type="submit" value="LOGIN">
+    <input type="submit" value="登录">
     ${sessionScope.messsge}<br>
     <a href="sign up.jsp">signup</a>
 </form>

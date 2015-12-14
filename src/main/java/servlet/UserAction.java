@@ -67,13 +67,10 @@ public class UserAction extends HttpServlet {
         }
     }
 
-    private void logout(HttpServletRequest req, HttpServletResponse resp) {
+    private void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.getSession().invalidate();
-        try {
-            resp.sendRedirect("default.jsp");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        resp.sendRedirect("default.jsp");
+
     }
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException {

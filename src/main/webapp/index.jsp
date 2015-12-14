@@ -15,7 +15,7 @@
     <c:redirect url="/"></c:redirect>
 </c:if>
 welcome:${sessionScope.user.username}<br>
-<a href="user?action=logout">log out</a>
+<a href="user?action=logout">退出</a>
 <hr>
 <form action="word" method="post">
     <input type="hidden" name="action" value="add">
