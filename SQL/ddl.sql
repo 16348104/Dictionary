@@ -1,16 +1,20 @@
-DROP TABLE IF EXISTS user;
-create TABLE "user" (
-  id int(10) unsigned not null,
-  "user" varchar(255),
-  password varchar(255),
-  PRIMARY KEY (id)
-) COMMENT '用户表';
-DROP TABLE IF EXISTS word;
+DROP DATABASE IF EXISTS test;
+CREATE DATABASE test;
+
+# user
+DROP TABLE IF EXISTS test.user;
+CREATE TABLE test.user
+(
+  id       INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(255),
+  password VARCHAR(255)
+) COMMIT '用户表';
+
+
+# word
+DROP TABLE IF EXISTS test.word;
 CREATE TABLE test.word (
   id      INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  chinese TEXT,
-  english TEXT
-)
-  COMMENT '词汇表' ;
-
-
+  english VARCHAR(255),
+  chinese VARCHAR(255)
+) COMMIT '词汇表';
