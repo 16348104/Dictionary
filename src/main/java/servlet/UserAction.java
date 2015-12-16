@@ -1,10 +1,8 @@
 package servlet;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.User;
 import org.apache.ibatis.session.SqlSession;
-
 import util.SqlSessionUtil;
 
 import javax.servlet.ServletException;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,20 +30,20 @@ public class UserAction extends HttpServlet {
             logout(req, resp);
         }
         if (action.equals("check")) {
-            check(req,resp);
+            check(req, resp);
         }
     }
-    private void check(HttpServletRequest req, HttpServletResponse resp) throws IOException
-    {
-        SqlSession sqlSession =  SqlSessionUtil.getSqlSession(false);
-        User user =sqlSession.selectOne("user.check",new User(null,req.getParameter("username"),null));
+
+    private void check(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
+        User user = sqlSession.selectOne("user.check", new User(null, req.getParameter("username"), null));
         sqlSession.close();
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Boolean> map = new HashMap<>();
-        if (user!=null) {
-            map.put("user exist",true)
+        if (user != null) {
+            map.put("user exist", true);
         } else {
-            map.put("user no exist",false)
+            map.put("user no exist", false);
         }
         resp.setContentType("application/json;charset=utf-8");
         resp.getWriter().print(objectMapper.writeValueAsString(map));
@@ -62,15 +59,16 @@ public class UserAction extends HttpServlet {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
         User user = sqlSession.selectOne("user.login", new User(null, req.getParameter("username"), req.getParameter("password")));
         sqlSession.close();
-        if (user!=null) {
+        if (user != null) {
             req.getSession().setAttribute("user", user);
             resp.sendRedirect("word?cation=query");
         } else {
-            req.getSession().setAttribute("message","错误");
-            req.getRequestDispatcher("default.jsp").forward(req,resp);
+            req.getSession().setAttribute("message", "错误");
+            req.getRequestDispatcher("default.jsp").forward(req, resp);
         }
 
     }
+
     private void signup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         User user = sqlSession.selectOne("user.login", new User(null, req.getParameter("username"), req.getParameter("password")));
