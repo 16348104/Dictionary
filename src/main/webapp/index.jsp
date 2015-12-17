@@ -43,7 +43,7 @@ welcome:${sessionScope.user.username}<br>
             <td>${status.count}</td>
             <td>${word.english}</td>
             <td>${word.chinese}</td>
-            <td><a href="word?action=search&id=${word.id}"></a>eidt</td>
+            <td><a href="word?action=search&id=${word.id}">eidt</a></td>
             <td><a href="word?action=delete&id=${word.id}" oncilck="return del()">delete</a></td>
         </tr>
     </c:forEach>

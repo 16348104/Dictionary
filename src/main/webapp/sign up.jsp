@@ -15,7 +15,7 @@
                         if (result.isUsernameExist) {
                             $('#hint').text(" exist!");
                         } else {
-                            $('#hint').text(" available");
+                            $('#hint').text(" available!");
 
                         }
                     }
