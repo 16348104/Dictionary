@@ -40,6 +40,7 @@ public class Word implements Serializable {
     public void setChinese(String chinese) {
         this.chinese = chinese;
     }
+
 }
 
 

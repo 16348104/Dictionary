@@ -1,7 +1,9 @@
 package servlet;
 
 import model.Word;
+import org.apache.ibatis.session.SqlSession;
 import util.DB;
+import util.SqlSessionUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,13 +24,11 @@ public class WordAction extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
         doPost(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
         String action = req.getParameter("action");
         if (action.equals("add")) {
             add(req, resp);
@@ -48,83 +48,46 @@ public class WordAction extends HttpServlet {
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String SQL = "DELETE  FROM word WHERE id=?";
-        try {
-            preparedStatement = DB.getConnection().prepareStatement(SQL);
-            preparedStatement.setInt(1, Integer.parseInt(req.getParameter("id")));
-            resp.sendRedirect("word?action=query");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
+        sqlSession.delete("word.delete",getWord(req));
+        sqlSession.close();
+        resp.sendRedirect("word?action=query");
     }
-    private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String SQL = "UPDATE word SET english=?,chinese=? WHERE id=?";
-        try {
-            preparedStatement = DB.getConnection().prepareStatement(SQL);
-            preparedStatement.setString(1, req.getParameter("english"));
-            preparedStatement.setString(2, req.getParameter("chinese"));
-            preparedStatement.setInt(3, Integer.parseInt(req.getParameter("id")));
-            preparedStatement.executeUpdate();
-            resp.sendRedirect("word?action=query");
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+    private Word getWord(HttpServletRequest req) {
+        Integer id = null;
+        if (req.getParameter("id")!=null) {
+            id = Integer.parseInt(req.getParameter("id"));
         }
+        return new Word(id, req.getParameter("english"), req.getParameter("chinese"));
+    }
+
+    private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
+        sqlSession.update("word.update", getWord(req));
+        sqlSession.close();
+        resp.sendRedirect("word?action=query");
     }
 
     private void search(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String SQL = "select * from word;WHERE id=?";
-        try {
-            preparedStatement = DB.getConnection().prepareStatement(SQL);
-            preparedStatement.setInt(1, Integer.parseInt(req.getParameter("id")));
-            resultSet = preparedStatement.executeQuery();
-            Word word = null;
-            if (resultSet.next()) {
-                word = new Word(resultSet.getInt("id"), resultSet.getString("english"), resultSet.getString("chinese"));
-                req.getSession().setAttribute("word", word);
-                resp.sendRedirect("edit.jsp");
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            DB.close(resultSet,preparedStatement);
-        }
-
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
+        req.getSession().setAttribute("word",sqlSession.selectOne("word.search",getWord(req)));
+        sqlSession.close();
+        resp.sendRedirect("edit.jsp");
     }
 
     private void query(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String SQL = "select * from word";
-        try {
-            preparedStatement = DB.getConnection().prepareStatement(SQL);
-            resultSet = preparedStatement.executeQuery();
-            List<Word> words = new ArrayList<>();
-            while (resultSet.next()) {
-               Word word = new Word(resultSet.getInt("id"), resultSet.getString("english"), resultSet.getString("chinese"));
-                words.add(word);
-            }
-            req.getSession().setAttribute("words", words);
-            resp.sendRedirect("index.jsp");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DB.close(null, preparedStatement);
-        }
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
+        req.getSession().setAttribute("wrod",sqlSession.selectList("wrod.query"));
+        sqlSession.close();
+        resp.sendRedirect("index.jsp");
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String SQL = "INSERT  INTO word VALUES (NULL ,?,?)";
-        try {
-            preparedStatement = DB.getConnection().prepareStatement(SQL);
-            preparedStatement.setString(1, req.getParameter("english"));
-            preparedStatement.setString(2, req.getParameter("chinese"));
-            preparedStatement.executeUpdate();
-            resp.sendRedirect("Word?action=query");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DB.close(null, preparedStatement);
-        }
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
+        sqlSession.insert("word.add", getWord(req));
+        sqlSession.close();
+        resp.sendRedirect("word?action=query");
 
     }
 }

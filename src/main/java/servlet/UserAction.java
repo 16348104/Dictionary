@@ -70,7 +70,7 @@ public class UserAction extends HttpServlet {
     }
 
     private void signup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
         User user = sqlSession.selectOne("user.login", new User(null, req.getParameter("username"), req.getParameter("password")));
         sqlSession.commit();
         sqlSession.close();
