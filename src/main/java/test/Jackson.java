@@ -30,7 +30,7 @@ public class Jackson {
         try {
             String json = objectMapper.writeValueAsString(word);
             System.out.println(json);
-//            Word word1 = objectMapper.readValues(json, Word.class);
+//           Word word1 = objectMapper.readValues(json, Word.class);
 //            System.out.println(json.getChinese());
         } catch (JsonProcessingException e) {
             e.printStackTrace();

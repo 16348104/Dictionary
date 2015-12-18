@@ -2,7 +2,6 @@ package servlet;
 
 import model.Word;
 import org.apache.ibatis.session.SqlSession;
-import util.DB;
 import util.SqlSessionUtil;
 
 import javax.servlet.ServletException;
@@ -11,21 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/word")
 public class WordAction extends HttpServlet {
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,20 +34,21 @@ public class WordAction extends HttpServlet {
         }
     }
 
-    private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
-        sqlSession.delete("word.delete",getWord(req));
-        sqlSession.close();
-        resp.sendRedirect("word?action=query");
-    }
-
     private Word getWord(HttpServletRequest req) {
         Integer id = null;
-        if (req.getParameter("id")!=null) {
+        if (req.getParameter("id") != null) {
             id = Integer.parseInt(req.getParameter("id"));
         }
         return new Word(id, req.getParameter("english"), req.getParameter("chinese"));
     }
+
+    private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
+        sqlSession.delete("word.delete", getWord(req));
+        sqlSession.close();
+        resp.sendRedirect("word?action=query");
+    }
+
 
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
@@ -71,14 +59,14 @@ public class WordAction extends HttpServlet {
 
     private void search(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
-        req.getSession().setAttribute("word",sqlSession.selectOne("word.search",getWord(req)));
+        req.getSession().setAttribute("word", sqlSession.selectOne("word.search", getWord(req)));
         sqlSession.close();
         resp.sendRedirect("edit.jsp");
     }
 
     private void query(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
-        req.getSession().setAttribute("wrod",sqlSession.selectList("wrod.query"));
+        req.getSession().setAttribute("word", sqlSession.selectList("word.query"));
         sqlSession.close();
         resp.sendRedirect("index.jsp");
     }
@@ -89,5 +77,10 @@ public class WordAction extends HttpServlet {
         sqlSession.close();
         resp.sendRedirect("word?action=query");
 
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
     }
 }

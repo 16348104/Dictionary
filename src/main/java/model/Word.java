@@ -1,14 +1,17 @@
 package model;
 
-
 import java.io.Serializable;
 
-public class Word implements Serializable {
+/**
+ * Created by xdx on 2015/12/18.
+ */
+public class Word implements Serializable{
     private Integer id;
     private String english;
     private String chinese;
 
     public Word() {
+
     }
 
     public Word(Integer id, String english, String chinese) {
@@ -40,7 +43,4 @@ public class Word implements Serializable {
     public void setChinese(String chinese) {
         this.chinese = chinese;
     }
-
 }
-
-
