@@ -7,7 +7,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Created by xdx on 2015/12/19.
  */
 public class Test {
-    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-    Business business = (Business) applicationContext.getBean("business");
+    public static void main(String[] args) {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        Business business = (Business) applicationContext.getBean("business");
+        business.write();
+
+    }
 
 }

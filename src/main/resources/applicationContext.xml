@@ -7,5 +7,4 @@
     <bean id="business" class="ioc.c.Business">
         <property name="deviceWrite" ref="floppywrite"></property>
     </bean>
-
 </beans>
