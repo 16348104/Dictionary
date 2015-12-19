@@ -5,34 +5,36 @@ import java.sql.*;
 import com.mysql.jdbc.Driver;
 
 public class DB {
-    private static final String url = "jdbc:mysql:///test";
-    private static final String user = "root";
-    private static final String password = "1111";
-    private static Connection conn;
+
+    private static final String URL = "jdbc:mysql:///test";
+    private static final String USER = "root";
+    private static final String PASSWORD = "1111";
+
+    private static Connection connection;
 
     public static Connection getConnection() {
-        if (conn == null) {
+        if (connection == null) {
             try {
                 new Driver();
-                conn = DriverManager.getConnection(url, user, password);
+                connection = DriverManager.getConnection(URL, USER, PASSWORD);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return null;
+        return connection;
     }
 
-    public static void close(ResultSet result, PreparedStatement prepare) {
-        if (result != null) {
+    public static void close(ResultSet resultSet, PreparedStatement preparedStatement) {
+        if (resultSet != null) {
             try {
-                result.close();
+                resultSet.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        if (prepare != null) {
+        if (preparedStatement != null) {
             try {
-                prepare.close();
+                preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
