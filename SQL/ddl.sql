@@ -19,6 +19,9 @@ CREATE TABLE test.word (
   chinese VARCHAR(255)
 ) comment'词汇表';
 
+
+
+-- slat
 DROP DATABASE IF EXISTS test;
 CREATE DATABASE test;
 
