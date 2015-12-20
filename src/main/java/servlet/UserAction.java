@@ -38,7 +38,7 @@ public class UserAction extends HttpServlet {
 
     private void check(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
-        User user = sqlSession.selectOne("user.check", new User(null, req.getParameter("username"), null));
+        User user = sqlSession.selectOne("user.check", new User(null, req.getParameter("username"), null, null));
         sqlSession.close();
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Boolean> map = new HashMap<>();
@@ -59,7 +59,7 @@ public class UserAction extends HttpServlet {
 
     private String getSaltbyusername(String username) {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
-        User user = sqlSession.selectOne("user.searchUserByUsername",new User(null,username,null));
+        User user = sqlSession.selectOne("user.searchUserByUsername",new User(null,username,null,null));
         sqlSession.close();
         return user.getSalt();
     }
@@ -68,7 +68,7 @@ public class UserAction extends HttpServlet {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
         String salt = getSaltbyusername(req.getParameter("username"));
         String password=DigestUtils.sha256Hex(req.getParameter("password").concat(salt));
-        User user = sqlSession.selectOne("user.login",new User(null,req.getParameter("username"),password));
+        User user = sqlSession.selectOne("user.login",new User(null,req.getParameter("username"),password,null));
         sqlSession.close();
         if (user != null) {
             req.getSession().setAttribute("user", user);
@@ -90,7 +90,7 @@ public class UserAction extends HttpServlet {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
         String salt=getSalt();
         String password= DigestUtils.sha256Hex(req.getParameter("password").concat(salt));
-        User user = sqlSession.selectOne("user.signup", new User(null, req.getParameter("username"), req.getParameter("salt")));
+        User user = sqlSession.selectOne("user.signup", new User(null, req.getParameter("username"),password,salt));
         sqlSession.close();
         resp.sendRedirect("default.jsp");
     }
