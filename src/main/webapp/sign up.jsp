@@ -29,6 +29,7 @@
 
 <form action="user" method="post">
     <input type="hidden" name="action" value="signup">
+    <form action="user/add" method="post">
     userneme: <input  name="username" id="username"><span id="hint"></span><br>
     password: <input type="password" name="password"><br>
     <input type="submit" value="sign up">
