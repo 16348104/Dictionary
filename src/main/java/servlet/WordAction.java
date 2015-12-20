@@ -39,7 +39,7 @@ public class WordAction extends HttpServlet {
         if (req.getParameter("id") != null) {
             id = Integer.parseInt(req.getParameter("id"));
         }
-        return new Word(id, req.getParameter("english"), req.getParameter("chinese"));
+//        return new Word(id, req.getParameter("english"), req.getParameter("chinese"));
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
