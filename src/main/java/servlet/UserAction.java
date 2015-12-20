@@ -2,6 +2,7 @@ package servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.User;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.ibatis.session.SqlSession;
 import util.SqlSessionUtil;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +57,13 @@ public class UserAction extends HttpServlet {
 
     }
 
+    private String getSaltbyusername(String username) {
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
+        User user = sqlSession.selectOne("user.searchUserByUsername",new User(null,username,null));
+        sqlSession.close();
+        return user.getSalt();
+    }
+
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
         User user = sqlSession.selectOne("user.login", new User(null, req.getParameter("username"), req.getParameter("password")));
@@ -68,11 +77,18 @@ public class UserAction extends HttpServlet {
         }
 
     }
+    private String getSalt() {
+        SecureRandom SRandom = new SecureRandom();
+        byte[] bytes = new byte[128];
+        SRandom.nextBytes(bytes);
+        return new String(bytes);
+    }
 
     private void signup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
-        User user = sqlSession.selectOne("user.login", new User(null, req.getParameter("username"), req.getParameter("password")));
-        sqlSession.commit();
+        String salt=getSalt();
+        String password= DigestUtils.sha256Hex(req.getParameter("password").concat(salt));
+        User user = sqlSession.selectOne("user.signup", new User(null, req.getParameter("username"), req.getParameter("slat")));
         sqlSession.close();
         resp.sendRedirect("default.jsp");
     }
