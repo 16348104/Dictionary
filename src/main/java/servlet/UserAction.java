@@ -66,9 +66,9 @@ public class UserAction extends HttpServlet {
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
-        String salt = getSaltbyusername(req.getParameter("username"));
-        String password=DigestUtils.sha256Hex(req.getParameter("password").concat(salt));
-        User user = sqlSession.selectOne("user.login",new User(null,req.getParameter("username"),password,null));
+        //String salt = getSaltbyusername(req.getParameter("username"));
+       // String password=DigestUtils.sha256Hex(req.getParameter("password").concat(salt));
+        User user = sqlSession.selectOne("user.login",new User(null,req.getParameter("username"),req.getParameter("password"),null));
         sqlSession.close();
         if (user != null) {
             req.getSession().setAttribute("user", user);
@@ -88,9 +88,9 @@ public class UserAction extends HttpServlet {
 
     private void signup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
-        String salt=getSalt();
-        String password= DigestUtils.sha256Hex(req.getParameter("password").concat(salt));
-        User user = sqlSession.selectOne("user.signup", new User(null, req.getParameter("username"),password,salt));
+        //String salt=getSalt();
+        //String password= DigestUtils.sha256Hex(req.getParameter("password").concat(salt));
+        User user = sqlSession.selectOne("user.signup", new User(null, req.getParameter("username"),req.getParameter("password"),null));
         sqlSession.close();
         resp.sendRedirect("default.jsp");
     }
