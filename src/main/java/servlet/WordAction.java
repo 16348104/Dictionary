@@ -34,13 +34,6 @@ public class WordAction extends HttpServlet {
         }
     }
 
-    private Word getWord(HttpServletRequest req) {
-        Integer id = null;
-        if (req.getParameter("id") != null) {
-            id = Integer.parseInt(req.getParameter("id"));
-        }
-//        return new Word(id, req.getParameter("english"), req.getParameter("chinese"));
-    }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
@@ -77,6 +70,13 @@ public class WordAction extends HttpServlet {
         sqlSession.close();
         resp.sendRedirect("word?action=query");
 
+    }
+    private Word getWord(HttpServletRequest req) {
+        Integer id = null;
+        if (req.getParameter("id") != null) {
+            id = Integer.parseInt(req.getParameter("id"));
+        }
+        return new Word(id, req.getParameter("english"), req.getParameter("chinese"));
     }
 
     @Override

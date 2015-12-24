@@ -6,10 +6,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
-
-/**
- * Created by Administrator on 2015/12/13.
- */
 public class SqlSessionUtil {
 
     private static SqlSessionFactory sqlSessionFactory;
