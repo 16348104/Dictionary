@@ -79,12 +79,11 @@ public class UserAction extends HttpServlet {
         }
 
     }
-    private String getSalt() {
-        SecureRandom SRandom = new SecureRandom();
-        byte[] bytes = new byte[64];
-        SRandom.nextBytes(bytes);
-        return new String(bytes);
-    }
+//    private String getSalt() {
+//        SecureRandom SRandom = new SecureRandom();
+//        byte[] bytes = new byte[64];
+//        SRandom.nextBytes(bytes);
+//        return new String(bytes);}
 
     private void signup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
