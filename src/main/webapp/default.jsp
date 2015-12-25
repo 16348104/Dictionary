@@ -11,7 +11,7 @@
     password: <input name="password" type="password"><br/>
     <input type="submit" value="登录">
     ${sessionScope.messsge}<br>
-    <a href="sign up.jsp">signup</a>
+    <a href="sign up.jsp">请注册用户！</a>
 </form>
 </body>
 </html>
