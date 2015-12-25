@@ -1,6 +1,6 @@
 package servlet;
 
-import model.Word;
+import com.dict.model.Word;
 import org.apache.ibatis.session.SqlSession;
 import util.MyBatisSqlSessionFactory;
 

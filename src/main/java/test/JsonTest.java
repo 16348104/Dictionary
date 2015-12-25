@@ -1,11 +1,10 @@
 package test;
 
 
-import model.Word;
+import com.dict.model.Word;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.enterprise.inject.New;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

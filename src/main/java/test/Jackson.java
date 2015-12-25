@@ -3,8 +3,7 @@ package test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import model.Word;
-import sun.java2d.pipe.SpanIterator;
+import com.dict.model.Word;
 
 import java.util.ArrayList;
 import java.util.HashMap;

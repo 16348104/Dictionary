@@ -13,5 +13,4 @@
         <property name="mapperLocations" value="classpath*:mapper/*_mapper.xml"/>
         <property name="typeAliasesPackage" value="model"/>
     </bean>
-
 </beans>

@@ -1,7 +1,7 @@
 package servlet;
 
+import com.dict.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.User;
 import org.apache.ibatis.session.SqlSession;
 import util.MyBatisSqlSessionFactory;
 
