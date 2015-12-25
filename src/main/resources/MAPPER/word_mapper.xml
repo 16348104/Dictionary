@@ -2,23 +2,26 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-        <mapper namespace="word">
-    <insert id="add" parameterType="model.Word" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO word VALUES (NULL ,#{english},#{chinese});
+<mapper namespace="word">
+    <insert id="add" parameterType="word" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO word VALUES (NULL, #{english}, #{chinese})
     </insert>
-    <select id ="query" parameterType="model.Word" resultType="model.Word">
-        select * from word;
+    <select id="query" parameterType="word" resultType="word">
+        SELECT *
+        FROM word
     </select>
-    <select id="search" parameterType="model.Word" resultType="model.Word">
-        select * from word
-        WHERE id=#{id};
+    <select id="search" parameterType="word" resultType="word">
+        SELECT *
+        FROM word
+        WHERE id = #{id}
     </select>
-    <update id="update" parameterType="model.Word" >
+    <update id="update" parameterType="word">
         UPDATE word
-        SET english=#{english},chinese=#{chinese}
-        WHERE id=#{id};
+        SET english = #{english}, chinese = #{chinese}
+        WHERE id = #{id}
     </update>
-    <delete id="delete" parameterType="model.Word">
-        DELETE FROM word WHERE id=#{id};
+    <delete id="delete" parameterType="word">
+        DELETE FROM word
+        WHERE id = #{id}
     </delete>
 </mapper>

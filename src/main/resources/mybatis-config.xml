@@ -19,7 +19,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mapper/user_mapper.xml"/>
-        <mapper resource="mapper/word_mapper.xml"/>
+        <mapper resource="MAPPER/user_mapper.xml"/>
+        <mapper resource="MAPPER/word_mapper.xml"/>
     </mappers>
 </configuration>
