@@ -7,9 +7,6 @@ import javax.xml.ws.ResponseWrapper;
 import java.io.IOException;
 import java.security.PrivateKey;
 
-/**
- * Created by xdx on 2015/12/10.
- */
 @WebFilter(urlPatterns = "/*",
         initParams = @WebInitParam(name = "charset", value = "utf-8"))
 public class EncodingFilter implements Filter {

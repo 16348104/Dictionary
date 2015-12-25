@@ -2,7 +2,7 @@ package servlet;
 
 import model.Word;
 import org.apache.ibatis.session.SqlSession;
-import util.SqlSessionUtil;
+import util.MyBatisSqlSessionFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,7 +36,7 @@ public class WordAction extends HttpServlet {
 
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
+        SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlsession(true);
         sqlSession.delete("word.delete", getWord(req));
         sqlSession.close();
         resp.sendRedirect("word?action=query");
@@ -44,28 +44,28 @@ public class WordAction extends HttpServlet {
 
 
     private void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
+        SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlsession(true);
         sqlSession.update("word.update", getWord(req));
         sqlSession.close();
         resp.sendRedirect("word?action=query");
     }
 
     private void search(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
+        SqlSession sqlSession =MyBatisSqlSessionFactory.getSqlsession(false);
         req.getSession().setAttribute("word", sqlSession.selectOne("word.search", getWord(req)));
         sqlSession.close();
         resp.sendRedirect("edit.jsp");
     }
 
     private void query(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SqlSession sqlSession = SqlSessionUtil.getSqlSession(false);
+        SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlsession(false);
         req.getSession().setAttribute("word", sqlSession.selectList("word.query"));
         sqlSession.close();
         resp.sendRedirect("index.jsp");
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        SqlSession sqlSession = SqlSessionUtil.getSqlSession(true);
+        SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlsession(true);
         sqlSession.insert("word.add", getWord(req));
         sqlSession.close();
         resp.sendRedirect("word?action=query");
