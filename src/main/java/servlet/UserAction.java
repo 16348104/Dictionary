@@ -83,14 +83,16 @@ public class UserAction extends HttpServlet {
 //        SRandom.nextBytes(bytes);
 //        return new String(bytes);}
 
-    private void signup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void signup(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         SqlSession sqlSession = MyBatisSqlSessionFactory.getSqlsession(true);
-        //String salt=getSalt();
-        //String password= DigestUtils.sha256Hex(req.getParameter("password").concat(salt));
-        sqlSession.insert("user.signup", new User(null, req.getParameter("username"), req.getParameter("password"), "slat"));
+//        String salt = getSalt();
+//        System.out.println("salt: " + salt);
+//        String password = DigestUtils.sha256Hex(req.getParameter("password").concat(salt));
+        sqlSession.insert("user.signup", new User(null, req.getParameter("username"), req.getParameter("password"), "salt"));
         sqlSession.close();
         resp.sendRedirect("default.jsp");
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
