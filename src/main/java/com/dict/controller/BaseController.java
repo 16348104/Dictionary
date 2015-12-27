@@ -1,4 +1,4 @@
-package controller;
+package com.dict.controller;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 
