@@ -15,13 +15,11 @@
     <c:redirect url="/"></c:redirect>
 </c:if>
 welcome:${sessionScope.user.username}<br>
-<a href="user?action=logout">退出</a>
+<a href="/user/logout">退出</a>
 <hr>
-<form action="word" method="post">
-    <input type="hidden" name="action" value="add">
-    english: <input type="text" name="english"><br>
-    chinese: <input type="text" name="chinese"><br>
-    <input type="submit" value="添加">
+<form action="/word/queryWordByEnglish" method="post">
+    <input type="text" name="english">
+    <input type="submit" value="查询">
 </form>
 <hr>
 <table border="0.5">
