@@ -5,14 +5,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class User extends BaseModel{
+public class WordSentence extends BaseModel {
     private Integer id;
-    private String username;
-    private String password;
+    private String partOfSpeech;
+    private String english;
+    private String chinese;
+    private String audioMale;
+    private String audioFemale;
+    private String source;
+    private Integer wordId;
 }

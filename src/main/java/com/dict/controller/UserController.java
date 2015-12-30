@@ -1,7 +1,6 @@
 package com.dict.controller;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
+import com.dict.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 public class UserController {
     @Autowired
-    private SqlSessionFactory sqlSessionFactory;
+    private UserService userService;
+
     @RequestMapping("/add")
-private String add(){
-        System.out.println(sqlSessionFactory);
-        SqlSession sqlSession = sqlSessionFactory.openSession(true);
+    private String add() {
+        userService.singup(user);
         return "default";
+    }
+    @RequestMapping("login")
+    private void login(){
+
     }
 }

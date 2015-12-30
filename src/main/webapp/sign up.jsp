@@ -8,7 +8,8 @@
             $('#username').blur(function () {
                 var user = $('#usernme').val();
                 $.ajax({
-                    url: 'user?action=check',
+                    type:'post',
+                    url: '/user/check',
                     data: {"username": username},
                     dataType: 'json',
                     success: function (result) {
@@ -16,7 +17,6 @@
                             $('#hint').text(" exist!");
                         } else {
                             $('#hint').text(" available!");
-
                         }
                     }
                 });
