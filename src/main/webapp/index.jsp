@@ -22,29 +22,30 @@ welcome:${sessionScope.user.username}<br>
     <input type="submit" value="查询">
 </form>
 <hr>
-<table border="0.5">
-    <c:choose>
-        <c:when test="${sessionScope.words[0] ==null}">
-            <c:out value="没有记录"></c:out>
-        </c:when>
-        <c:otherwise>
-            <tr>
-                <th>ID</th>
-                <th>ENGLISH</th>
-                <th>CHINESE</th>
-                <th colspan="2">操作</th>
-            </tr>
-        </c:otherwise>
-    </c:choose>
-    <c:forEach items="${sessionScope.words} " var="word" varStatus="status">
-        <tr>
-            <td>${status.count}</td>
-            <td>${word.english}</td>
-            <td>${word.chinese}</td>
-            <td><a href="word?action=search&id=${word.id}">eidt</a></td>
-            <td><a href="word?action=delete&id=${word.id}" oncilck="return del()">delete</a></td>
-        </tr>
-    </c:forEach>
-</table>
+<%--<table border="0.5">--%>
+    <%--<c:choose>--%>
+        <%--<c:when test="${sessionScope.words[0] ==null}">--%>
+            <%--<c:out value="没有记录"></c:out>--%>
+        <%--</c:when>--%>
+        <%--<c:otherwise>--%>
+            <%--<tr>--%>
+                <%--<th>ID</th>--%>
+                <%--<th>ENGLISH</th>--%>
+                <%--<th>CHINESE</th>--%>
+                <%--<th colspan="2">操作</th>--%>
+            <%--</tr>--%>
+        <%--</c:otherwise>--%>
+    <%--</c:choose>--%>
+    <%--<c:forEach items="${sessionScope.words} " var="word" varStatus="status">--%>
+        <%--<tr>--%>
+            <%--<td>${status.count}</td>--%>
+            <%--<td>${word.english}</td>--%>
+            <%--<td>${word.chinese}</td>--%>
+            <%--<td><a href="word?action=search&id=${word.id}">eidt</a></td>--%>
+            <%--<td><a href="word?action=delete&id=${word.id}" oncilck="return del()">delete</a></td>--%>
+        <%--</tr>--%>
+    <%--</c:forEach>--%>
+  <%----%>
+<%--</table>--%>
 </body>
 </html>
