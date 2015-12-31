@@ -18,7 +18,7 @@ public class BaseController {
     private HttpServletResponse response;
     private HttpSession session;
     private ServletContext application;
-@ModelAttribute
+@ModelAttribute  //
     public void set(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;

@@ -6,12 +6,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class User extends BaseModel{
+public class User extends BaseModel {
     private Integer id;
     private String username;
     private String password;

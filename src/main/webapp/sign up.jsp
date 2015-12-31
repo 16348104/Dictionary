@@ -26,7 +26,7 @@
 </head>
 <body>
 <h1>sign up</h1>
-<form action="user/add" method="post">
+<form action="/user/add" method="post">
 
     <form action="user" method="post">
     userneme: <input  name="username" id="username"><span id="hint"></span><br>
