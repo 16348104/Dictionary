@@ -32,10 +32,12 @@ welcome:${sessionScope.user.username}<br>
           ${vs.count}:${definition.partOfSpeech}--${definition.chinese}
             <br>
         </c:forEach>
-
     </div>
-    <div>
-
+    <div id="word_sentence">
+        <c:forEach var="sentence" varStatus="vs" items="${sessionScope.word.wordSentence}">
+            ${vs.count}:${sentence.partOfSpeech}--${sentence.chinese}<br>
+            ${vs.count}:${sentence.partOfSpeech}--${sentence.chinese}<br>
+        </c:forEach>
     </div>
 </div>
 <%--<table border="0.5">--%>
