@@ -9,4 +9,6 @@ public interface GenericDao<T extends Serializable,ID extends Serializable> {
     void add(T t);
     void remove(ID id);
     T query(T t);
+
+
 }

@@ -1,31 +1,53 @@
 package com.dict.controller;
 
+
+import com.dict.model.User;
 import com.dict.service.UserService;
-import com.sun.javafx.collections.MappingChange;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
 
-public class UserController {
+public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
     @RequestMapping("/add")
-    private String add() {
-        userService.singup(user);
+    private String add(User user) {
+        userService.signup(user);
         return "default";
     }
+
     @RequestMapping("/check")
-    private Map<>
+    private
+    @ResponseBody Map<String, Object>check(@RequestParam String username){
+        User user = (User) userService.query(new User(null, username, null));
+        Map<String, Object> map = new HashMap<>();
+        if (username!=null) {
+            map.put("isUsernameExist",true);
+        } else {
+            map.put("isUsernameExist",false);
+        }
+        return map;
+    }
+
     @RequestMapping("/login")
-    private String  login(){
+
+    private String login(User user) {
+        user = userService.login(user);
+        if (user != null) {
+            getSession().setAttribute("user", user);
+            return "index";
+        } else {
+            getRequest().setAttribute("message", "用户或密码错");
+            return "default";
+        }
     }
 
     @RequestMapping("/logout")
@@ -33,7 +55,6 @@ public class UserController {
         getSession().invalidate();
         return "default";
     }
-
 
 
 }

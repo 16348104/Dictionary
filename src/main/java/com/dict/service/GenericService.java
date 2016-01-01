@@ -9,3 +9,4 @@ public interface GenericService <T extends Serializable , ID extends Serializabl
     void add(T t);
     void remove(ID id);
     T query(T t);
+}
