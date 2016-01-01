@@ -22,6 +22,22 @@ welcome:${sessionScope.user.username}<br>
     <input type="submit" value="查询">
 </form>
 <hr>
+<div>
+    <div id="word_wrapper">
+       ${sessionScope.word.english}
+    </div>
+    <div id="word_definition">
+        <c:forEach var="definition" varStatus="vs" items="${sessionScope.word.wordDefinitions}">
+          ${vs.count}:${definition.partOfSpeech}--${definition.chinese}
+          ${vs.count}:${definition.partOfSpeech}--${definition.chinese}
+            <br>
+        </c:forEach>
+
+    </div>
+    <div>
+
+    </div>
+</div>
 <%--<table border="0.5">--%>
     <%--<c:choose>--%>
         <%--<c:when test="${sessionScope.words[0] ==null}">--%>

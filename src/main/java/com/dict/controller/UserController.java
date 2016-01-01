@@ -1,15 +1,15 @@
 package com.dict.controller;
 
 import com.dict.service.UserService;
+import com.sun.javafx.collections.MappingChange;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * Created by dell on 2015/12/25.
- */
+import java.util.Map;
+
 @Controller
 @RequestMapping("/user")
 
@@ -22,7 +22,18 @@ public class UserController {
         userService.singup(user);
         return "default";
     }
+    @RequestMapping("/check")
+    private Map<>
     @RequestMapping("/login")
     private String  login(){
     }
+
+    @RequestMapping("/logout")
+    private String logout() {
+        getSession().invalidate();
+        return "default";
+    }
+
+
+
 }
