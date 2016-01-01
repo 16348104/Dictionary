@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by xdx on 2015/12/30.
  */
-public abstract class GenericServiceImpl<T extends Serializable, ID extends Serializable> implements GenericService
+public abstract class GenericServiceImpl<T extends Serializable, ID extends Serializable> implements GenericService<T, ID>
 {
     protected GenericDao<T, ID> genericDao;//域
     protected abstract void setGenericDao(GenericDao<T, ID> genericDao);
@@ -22,7 +22,7 @@ public abstract class GenericServiceImpl<T extends Serializable, ID extends Seri
     }
 
     @Override
-    public T queryOne(T t) {
+    public T query(T t) {
         return genericDao.query(t);
     }
 
