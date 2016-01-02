@@ -19,27 +19,27 @@ public class GenericDaoImpl<T extends Serializable, ID extends Serializable> imp
     public GenericDaoImpl() {//java反射
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         Class<T> modelClass = (Class<T>) parameterizedType.getActualTypeArguments()[0];
-        namespace = modelClass.getSimpleName().toLowerCase().concat(".");
+        namespace = modelClass.getSimpleName().toLowerCase();
     }
 
     @Override
     public void add(T t) {
         SqlSession sqlSession = sqlSessionFactory.openSession(true);
-        sqlSession.insert(namespace.concat("add"), t);
+        sqlSession.insert(namespace.concat(".add"), t);
         sqlSession.close();
     }
 
     @Override
     public void remove(ID id) {
         SqlSession sqlSession = sqlSessionFactory.openSession(true);
-        sqlSession.delete(namespace.concat("remove"),id);
+        sqlSession.delete(namespace.concat(".remove"),id);
         sqlSession.close();
     }
 
     @Override
     public T query(T t) {
         SqlSession sqlSession = sqlSessionFactory.openSession(false);
-        t = sqlSession.selectOne(namespace.concat("query"), t);
+        t = sqlSession.selectOne(namespace.concat(".query"), t);
         sqlSession.close();
         return t;
     }
