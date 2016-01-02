@@ -34,7 +34,7 @@ public class ComponentGenerator {
 
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(ModelPath + modelname + SUFFIX));
 
-        Map<String, Objects> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("model", modelname);
         map.put("property", propertiesMap);
         template.process(map, bufferedWriter);
